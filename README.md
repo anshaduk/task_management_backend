@@ -30,3 +30,10 @@ pip install -r requirements.txt
 5️⃣ Create Superuser
 
 6️⃣ Start the Server
+
+py manage.py runserver
+
+
+url path:http://127.0.0.1:8000/login/
+
+
