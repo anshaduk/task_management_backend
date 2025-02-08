@@ -15,7 +15,7 @@ urlpatterns = [
     path('delete-task/<int:task_id>/', delete_task, name='delete-task'),
     path('task-report/<int:task_id>/', task_report, name='task-report'),
 
-    path('superadmin/dashboard/',superadmin_dashboard,name='superadmin-dashboard'),
-    path('admin/dashboard/', admin_dashboard, name='admin-dashboard'),
+    path('dashboard/superadmin/',superadmin_dashboard,name='superadmin-dashboard'),
+    path('dashboard/admin/', admin_dashboard, name='admin-dashboard'),
 
 ]

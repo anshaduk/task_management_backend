@@ -195,7 +195,7 @@ def login_view(request):
             elif user.is_admin:
                 return redirect('admin-dashboard')
             else:
-                return redirect('task-list')  # Redirect regular users to their task list
+                return redirect('task-list')  
         else:
             messages.error(request, "Invalid username or password.")
     

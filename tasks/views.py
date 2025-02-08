@@ -8,6 +8,8 @@ from users.models import CustomUser
 from . serializers import TaskSerializer
 from django.contrib.auth.decorators import login_required
 from .forms import TaskForm
+from django.core.exceptions import PermissionDenied
+
 
 class TaskListView(APIView):
     permission_classes = [IsAuthenticated]
@@ -74,11 +76,21 @@ def superadmin_dashboard(request):
 ###Admin Dashboard View###
 @login_required
 def admin_dashboard(request):
+    # Check if user has admin privileges
     if not request.user.is_admin:
-        return render(request, '403.html', status=403)
-
-    tasks = Task.objects.filter(assigned_to__role='user')
-    return render(request, 'admin/dashboard.html', {'tasks': tasks})
+        raise PermissionDenied("You don't have permission to access this page.")
+    
+    # Get tasks (assuming you have a Task model)
+    tasks = Task.objects.all()  # You might want to filter based on department or other criteria
+    
+    context = {
+        'tasks': tasks,
+        'user_count': CustomUser.objects.filter(role='user').count(),
+        'pending_tasks': tasks.filter(status='pending').count(),
+        'completed_tasks': tasks.filter(status='completed').count(),
+    }
+    
+    return render(request, 'admin/dashboard.html', context)
 
 
 

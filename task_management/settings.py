@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     #Third Party App's
     "rest_framework",
     "rest_framework_simplejwt",
+    "corsheaders",
 
     
 
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -174,3 +176,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'bridgeonelearning@gmail.com'
 EMAIL_HOST_PASSWORD = 'pwtr agym lvth abpi'
+
+
+
+CORS_ALLOW_ALL_ORIGINS = True
