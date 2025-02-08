@@ -16,30 +16,32 @@ class TaskSerializer(serializers.ModelSerializer):
     
     def get_assigned_to_username(self, obj):
         return obj.assigned_to.username
+    
 
     def validate(self, data):
-        # Validate task creation/update based on user role
+        
         request = self.context.get('request')
         user = request.user if request else None
 
         if not user:
             raise serializers.ValidationError("Authentication required")
 
-        # Superadmin and admin can create/assign tasks to any user
+    
         if user.role not in ['superadmin', 'admin'] and 'assigned_to' in data:
             if data['assigned_to'] != user:
                 raise serializers.ValidationError("You can only assign tasks to yourself")
 
-        # Completion report and worked hours validation
-        if data.get('status') == 'completed':
+        
+        if data.get('status') == 'completed':  
             if not data.get('completion_report'):
                 raise serializers.ValidationError({"completion_report": "Completion report is required when marking task as completed."})
             if data.get('worked_hours') is None:
                 raise serializers.ValidationError({"worked_hours": "Worked hours must be provided when marking task as completed."})
         
         return data
-
+    
+    
     def create(self, validated_data):
         request = self.context.get('request')
         validated_data['created_by'] = request.user
-        return super().create(validated_data)   
+        return super().create(validated_data)

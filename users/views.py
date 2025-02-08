@@ -27,7 +27,7 @@ class UserListCreateView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        # Filter users based on role
+        
         if request.user.is_superadmin:
             users = CustomUser.objects.all()
         elif request.user.is_admin:
@@ -39,7 +39,7 @@ class UserListCreateView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        # Only superadmins can create users
+
         if not request.user.is_superadmin:
             return Response(
                 {"error": "Only superadmins can create users"},
@@ -56,13 +56,13 @@ class UserListCreateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# User Detail, Update, and Delete View
+
 class UserDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         user = get_object_or_404(CustomUser, pk=pk)
-        # Check permissions based on roles
+        
         if self.request.user.is_superadmin:
             return user
         elif self.request.user.is_admin and user.role != 'superadmin':
@@ -200,6 +200,7 @@ def login_view(request):
             messages.error(request, "Invalid username or password.")
     
     return render(request, 'login.html')
+
 
 ##Logout##
 def logout_view(request):

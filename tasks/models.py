@@ -3,9 +3,9 @@ from django.conf import settings
 
 class Task(models.Model):
     STATUS_CHOICES = [
-        ('pending','Pending'),
-        ('in_progress','In Progress'),
-        ('completed','Completed'),
+        ('pending', 'Pending'),
+        ('in progress', 'In Progress'),
+        ('completed', 'Completed'),
     ]
 
     PRIORITY_CHOICES = [

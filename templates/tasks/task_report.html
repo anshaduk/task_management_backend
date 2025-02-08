@@ -11,6 +11,12 @@
     <p><strong>Task Name:</strong> {{ task.name }}</p>
     <p><strong>Description:</strong> {{ task.description }}</p>
     <p><strong>Status:</strong> {{ task.status }}</p>
-    <a href="{% url 'superadmin-dashboard' %}">Back to Dashboard</a>
+    
+    {# Dynamically determine the dashboard URL based on user role #}
+    {% if request.user.is_superuser %}
+        <a href="{% url 'superadmin-dashboard' %}">Back to Dashboard</a>
+    {% else %}
+        <a href="{% url 'admin-dashboard' %}">Back to Dashboard</a>
+    {% endif %}
 </body>
 </html>

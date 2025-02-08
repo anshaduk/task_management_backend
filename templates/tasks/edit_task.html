@@ -11,7 +11,15 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Save</button>
-        <a href="{% url 'superadmin-dashboard' %}">Cancel</a>
+        
+        <a href="
+            {% if request.user.role == 'superadmin' %}
+                {% url 'superadmin-dashboard' %}
+            {% else %}
+                {% url 'admin-dashboard' %}
+            {% endif %}">
+            Cancel
+        </a>
     </form>
 </body>
 </html>
