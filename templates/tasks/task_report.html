@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Report</title>
+</head>
+<body>
+    <h1>Task Report</h1>
+    <p><strong>Task ID:</strong> {{ task.id }}</p>
+    <p><strong>Task Name:</strong> {{ task.name }}</p>
+    <p><strong>Description:</strong> {{ task.description }}</p>
+    <p><strong>Status:</strong> {{ task.status }}</p>
+    <a href="{% url 'superadmin-dashboard' %}">Back to Dashboard</a>
+</body>
+</html>

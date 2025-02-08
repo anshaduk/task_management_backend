@@ -47,8 +47,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
 
-    # 'crispy_forms',
-    # 'crispy_bootstrap5',
+    
 
 ]
 
@@ -167,5 +166,11 @@ SIMPLE_JWT = {
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
-# CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-# CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+##SMTP##
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'bridgeonelearning@gmail.com'
+EMAIL_HOST_PASSWORD = 'pwtr agym lvth abpi'

@@ -101,15 +101,15 @@ def edit_task(request, task_id):
             return redirect('superadmin-dashboard')
     else:
         form = TaskForm(instance=task)
-    return render(request, 'edit_task.html', {'form': form})
+    return render(request, 'tasks/edit_task.html', {'form': form})
 
 def delete_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
     if request.method == 'POST':
         task.delete()
         return redirect('superadmin-dashboard')
-    return render(request, 'confirm_delete.html', {'object': task})
+    return render(request, 'tasks/confirm_delete.html', {'object': task})
 
 def task_report(request, task_id):
     task = get_object_or_404(Task, id=task_id)
-    return render(request, 'task_report.html', {'task': task})
+    return render(request, 'tasks/task_report.html', {'task': task})

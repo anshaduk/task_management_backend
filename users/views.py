@@ -13,6 +13,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from . forms import UserForm
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 # Custom JWT Token View
@@ -122,11 +124,40 @@ def create_user(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+
+            # Send email notification with username and password
+            subject = "Your Account Details - Task Management"
+            message = f"""
+            Hello {user.username},
+
+            Your account has been successfully created.
+
+            Here are your login credentials:
+
+            **Username:** {user.username}  
+            **Password:** {form.cleaned_data['password']}  
+
+            Please log in and change your password immediately for security.
+
+            Regards,  
+            Task Management Team
+            """
+            from_email = settings.EMAIL_HOST_USER
+            recipient_list = [user.email]
+
+            try:
+                send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+                messages.success(request, "User created successfully, and email sent with credentials.")
+            except Exception as e:
+                messages.error(request, f"User created, but email failed: {e}")
+
             return redirect('superadmin-dashboard')
     else:
         form = UserForm()
+
     return render(request, 'users/create_user.html', {'form': form})
+
 
 def edit_user(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
@@ -137,14 +168,14 @@ def edit_user(request, user_id):
             return redirect('superadmin-dashboard')
     else:
         form = UserForm(instance=user)
-    return render(request, 'edit_user.html', {'form': form})
+    return render(request, 'users/edit_user.html', {'form': form})
 
 def delete_user(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     if request.method == 'POST':
         user.delete()
         return redirect('superadmin-dashboard')
-    return render(request, 'confirm_delete.html', {'object': user})
+    return render(request, 'users/confirm_delete.html', {'object': user})
 
 
     
